@@ -35,7 +35,7 @@
     flex-direction: row-reverse;
 }
 .avatar {
-    width: 84rpx;
+    min-width: 100rpx;
     height: 84rpx;
     border: #a5a5a7 1rpx solid;
     display: inline-block;
@@ -64,6 +64,7 @@
     line-height: 36rpx;
     padding: 20rpx;
     position: relative;
+    word-break: break-all;
 }
 .user-message.me .text .content {
     background: #a0e75b;
