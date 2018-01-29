@@ -35,7 +35,7 @@
     flex-direction: row-reverse;
 }
 .avatar {
-    min-width: 100rpx;
+    width: 84rpx;
     height: 84rpx;
     border: #a5a5a7 1rpx solid;
     display: inline-block;
