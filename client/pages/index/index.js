@@ -81,6 +81,11 @@ Page({
     },
 
     onShow: function() {
+        page = 1;
+        over = false;
+        this.setData({
+            rows: []
+        });
         this.setData(helper.getLoggedInfo());
         helper.helpRequest(this, riddleLoad, true);
     },

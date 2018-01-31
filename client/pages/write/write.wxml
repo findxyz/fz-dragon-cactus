@@ -3,7 +3,7 @@
         <view class="weui-btn-area">
             <button class="weui-btn" type="primary" open-type="getUserInfo" bindgetuserinfo="reAuthHandler" class="{{authShow}}">重新授权</button>
         </view>
-        <view class="weui-cells__title">位置</view>
+        <view class="weui-cells__title">位置(指定房间，默认广场)</view>
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__bd">
