@@ -29,4 +29,6 @@ function bind() {
 listen(null);
 bind();
 
-module.exports = { listen };
+module.exports = {
+    listen
+};

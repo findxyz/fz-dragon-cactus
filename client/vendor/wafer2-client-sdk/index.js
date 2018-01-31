@@ -18,7 +18,7 @@ var exports = module.exports = {
 };
 
 // 导出错误类型码
-Object.keys(constants).forEach(function (key) {
+Object.keys(constants).forEach(function(key) {
     if (key.indexOf('ERR_') === 0) {
         exports[key] = constants[key];
     }

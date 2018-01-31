@@ -1,12 +1,32 @@
 {
-    "pages": [
-        "pages/index/index",
-        "pages/chat/chat"
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#333",
-        "navigationBarTitleText": "腾讯云小程序解决方案",
-        "navigationBarTextStyle": "white"
-    }
+  "pages": [
+    "pages/index/index",
+    "pages/write/write"
+  ],
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "image/c1.png",
+        "selectedIconPath": "image/c2.png",
+        "text": "***"
+      },
+      {
+        "pagePath": "pages/write/write",
+        "iconPath": "image/x1.png",
+        "selectedIconPath": "image/x2.png",
+        "text": "@@@"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#333",
+    "navigationBarTitleText": "猜谜游戏",
+    "navigationBarTextStyle": "white"
+  }
 }

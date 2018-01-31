@@ -66,10 +66,21 @@ function Tunnel(serviceUrl) {
     //   active       - 当前信道已经在工作
     //   reconnecting - 断线重连中
     //=========================================================================
-    function isClosed() { return me.status === STATUS_CLOSED; }
-    function isConnecting() { return me.status === STATUS_CONNECTING; }
-    function isActive() { return me.status === STATUS_ACTIVE; }
-    function isReconnecting() { return me.status === STATUS_RECONNECTING; }
+    function isClosed() {
+        return me.status === STATUS_CLOSED;
+    }
+
+    function isConnecting() {
+        return me.status === STATUS_CONNECTING;
+    }
+
+    function isActive() {
+        return me.status === STATUS_ACTIVE;
+    }
+
+    function isReconnecting() {
+        return me.status === STATUS_RECONNECTING;
+    }
 
     function setStatus(status) {
         var lastStatus = me.status;
@@ -109,7 +120,7 @@ function Tunnel(serviceUrl) {
      * 派发事件，通知所有处理函数进行处理
      */
     function dispatchEvent(eventType, eventPayload) {
-        eventHandlers.forEach(function (handler) {
+        eventHandlers.forEach(function(handler) {
             var handleType = handler[0];
             var handleFn = handler[1];
 
@@ -152,7 +163,7 @@ function Tunnel(serviceUrl) {
         requestLib.request({
             url: serviceUrl,
             method: 'GET',
-            success: function (response) {
+            success: function(response) {
                 if (+response.statusCode === 200 && response.data && response.data.data.connectUrl) {
                     openSocket(me.socketUrl = response.data.data.connectUrl);
                 } else {
@@ -190,7 +201,9 @@ function Tunnel(serviceUrl) {
             onError: handleSocketError,
         });
 
-        wx.connectSocket({ url: url });
+        wx.connectSocket({
+            url: url
+        });
         isFirstConnection = false;
     }
 
@@ -222,8 +235,7 @@ function Tunnel(serviceUrl) {
         if (isConnecting()) {
             dispatchEvent('connect');
 
-        }
-        else if (isReconnecting()) {
+        } else if (isReconnecting()) {
             dispatchEvent('reconnect');
             resetReconnectionContext();
         }
@@ -293,14 +305,18 @@ function Tunnel(serviceUrl) {
      * 发送 Ping 包
      */
     function emitPingPacket() {
-        emitPacket({ type: PACKET_TYPE_PING });
+        emitPacket({
+            type: PACKET_TYPE_PING
+        });
     }
 
     /**
      * 发送关闭包
      */
     function emitClosePacket() {
-        emitPacket({ type: PACKET_TYPE_CLOSE });
+        emitPacket({
+            type: PACKET_TYPE_CLOSE
+        });
     }
 
     /**
@@ -310,7 +326,9 @@ function Tunnel(serviceUrl) {
         var packetParts = raw.split(':');
         var packetType = packetParts.shift();
         var packetContent = packetParts.join(':') || null;
-        var packet = { type: packetType };
+        var packet = {
+            type: packetType
+        };
 
         if (packetContent) {
             try {
@@ -319,21 +337,21 @@ function Tunnel(serviceUrl) {
         }
 
         switch (packet.type) {
-        case PACKET_TYPE_MESSAGE:
-            handleMessagePacket(packet);
-            break;
-        case PACKET_TYPE_PONG:
-            handlePongPacket(packet);
-            break;
-        case PACKET_TYPE_TIMEOUT:
-            handleTimeoutPacket(packet);
-            break;
-        case PACKET_TYPE_CLOSE:
-            handleClosePacket(packet);
-            break;
-        default:
-            handleUnknownPacket(packet);
-            break;
+            case PACKET_TYPE_MESSAGE:
+                handleMessagePacket(packet);
+                break;
+            case PACKET_TYPE_PONG:
+                handlePongPacket(packet);
+                break;
+            case PACKET_TYPE_TIMEOUT:
+                handleTimeoutPacket(packet);
+                break;
+            case PACKET_TYPE_CLOSE:
+                handleClosePacket(packet);
+                break;
+            default:
+                handleUnknownPacket(packet);
+                break;
         }
     }
 
@@ -431,8 +449,7 @@ function Tunnel(serviceUrl) {
                 message: '重连失败',
                 detail: lastError,
             });
-        }
-        else {
+        } else {
             wx.closeSocket();
             waitBeforeReconnect += reconnectTimeIncrease;
             setStatus(STATUS_RECONNECTING);
@@ -513,13 +530,13 @@ function Tunnel(serviceUrl) {
      */
     function handleSocketError(detail) {
         switch (me.status) {
-        case Tunnel.STATUS_CONNECTING:
-            dispatchEvent('error', {
-                code: ERR_SOCKET_ERROR,
-                message: '连接信道失败，网络错误或者信道服务不可用',
-                detail: detail,
-            });
-            break;
+            case Tunnel.STATUS_CONNECTING:
+                dispatchEvent('error', {
+                    code: ERR_SOCKET_ERROR,
+                    message: '连接信道失败，网络错误或者信道服务不可用',
+                    detail: detail,
+                });
+                break;
         }
     }
 

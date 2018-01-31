@@ -6,7 +6,7 @@ var Session = require('./session');
  * @class
  * 表示登录过程中发生的异常
  */
-var LoginError = (function () {
+var LoginError = (function() {
     function LoginError(type, message) {
         Error.call(this, message);
         this.type = type;
@@ -24,9 +24,9 @@ var LoginError = (function () {
  */
 var getWxLoginResult = function getLoginCode(callback) {
     wx.login({
-        success: function (loginResult) {
+        success: function(loginResult) {
             wx.getUserInfo({
-                success: function (userResult) {
+                success: function(userResult) {
                     callback(null, {
                         code: loginResult.code,
                         encryptedData: userResult.encryptedData,
@@ -35,7 +35,7 @@ var getWxLoginResult = function getLoginCode(callback) {
                     });
                 },
 
-                fail: function (userError) {
+                fail: function(userError) {
                     var error = new LoginError(constants.ERR_WX_GET_USER_INFO, '获取微信用户信息失败，请检查网络状态');
                     error.detail = userError;
                     callback(error, null);
@@ -43,7 +43,7 @@ var getWxLoginResult = function getLoginCode(callback) {
             });
         },
 
-        fail: function (loginError) {
+        fail: function(loginError) {
             var error = new LoginError(constants.ERR_WX_LOGIN_FAILED, '微信登录失败，请检查网络状态');
             error.detail = loginError;
             callback(error, null);
@@ -77,12 +77,12 @@ var login = function login(options) {
         return;
     }
 
-    var doLogin = () => getWxLoginResult(function (wxLoginError, wxLoginResult) {
+    var doLogin = () => getWxLoginResult(function(wxLoginError, wxLoginResult) {
         if (wxLoginError) {
             options.fail(wxLoginError);
             return;
         }
-        
+
         var userInfo = wxLoginResult.userInfo;
 
         // 构造请求头，包含 code、encryptedData 和 iv
@@ -101,7 +101,7 @@ var login = function login(options) {
             header: header,
             method: options.method,
             data: options.data,
-            success: function (result) {
+            success: function(result) {
                 var data = result.data;
 
                 // 成功地响应会话信息
@@ -116,7 +116,7 @@ var login = function login(options) {
                         options.fail(noSessionError);
                     }
 
-                // 没有正确响应会话信息
+                    // 没有正确响应会话信息
                 } else {
                     var noSessionError = new LoginError(constants.ERR_LOGIN_SESSION_NOT_RECEIVED, JSON.stringify(data));
                     options.fail(noSessionError);
@@ -124,7 +124,7 @@ var login = function login(options) {
             },
 
             // 响应错误
-            fail: function (loginResponseError) {
+            fail: function(loginResponseError) {
                 var error = new LoginError(constants.ERR_LOGIN_FAILED, '登录失败，可能是网络错误或者服务器发生异常');
                 options.fail(error);
             },
@@ -134,11 +134,11 @@ var login = function login(options) {
     var session = Session.get();
     if (session) {
         wx.checkSession({
-            success: function () {
+            success: function() {
                 options.success(session.userinfo);
             },
 
-            fail: function () {
+            fail: function() {
                 Session.clear();
                 doLogin();
             },
@@ -148,7 +148,7 @@ var login = function login(options) {
     }
 };
 
-var setLoginUrl = function (loginUrl) {
+var setLoginUrl = function(loginUrl) {
     defaultOptions.loginUrl = loginUrl;
 };
 

@@ -19,7 +19,7 @@ var buildAuthHeader = function buildAuthHeader(session) {
  * @class
  * 表示请求过程中发生的异常
  */
-var RequestError = (function () {
+var RequestError = (function() {
     function RequestError(type, message) {
         Error.call(this, message);
         this.type = type;
@@ -45,13 +45,13 @@ function request(options) {
     var originHeader = options.header || {};
 
     // 成功回调
-    var callSuccess = function () {
+    var callSuccess = function() {
         success.apply(null, arguments);
         complete.apply(null, arguments);
     };
 
     // 失败回调
-    var callFail = function (error) {
+    var callFail = function(error) {
         fail.call(null, error);
         complete.call(null, error);
     };
@@ -67,7 +67,10 @@ function request(options) {
 
     // 登录后再请求
     function doRequestWithLogin() {
-        loginLib.login({ success: doRequest, fail: callFail });
+        loginLib.login({
+            success: doRequest,
+            fail: callFail
+        });
     }
 
     // 实际进行请求的方法
@@ -77,7 +80,7 @@ function request(options) {
         wx.request(utils.extend({}, options, {
             header: utils.extend({}, originHeader, authHeader),
 
-            success: function (response) {
+            success: function(response) {
                 var data = response.data;
 
                 var error, message;

@@ -1,4 +1,6 @@
-const { tunnel } = require('../qcloud')
+const {
+    tunnel
+} = require('../qcloud')
 const debug = require('debug')('koa-weapp-demo')
 
 /**
@@ -50,8 +52,10 @@ const $close = (tunnelId) => {
  * 在客户端成功连接 WebSocket 信道服务之后会调用该方法，
  * 此时通知所有其它在线的用户当前总人数以及刚加入的用户是谁
  */
-function onConnect (tunnelId) {
-    console.log(`[onConnect] =>`, { tunnelId })
+function onConnect(tunnelId) {
+    console.log(`[onConnect] =>`, {
+        tunnelId
+    })
 
     if (tunnelId in userMap) {
         connectedTunnelIds.push(tunnelId)
@@ -72,8 +76,12 @@ function onConnect (tunnelId) {
  * 在本示例，我们处理 `speak` 类型的消息，该消息表示有用户发言。
  * 我们把这个发言的信息广播到所有在线的 WebSocket 信道上
  */
-function onMessage (tunnelId, type, content) {
-    console.log(`[onMessage] =>`, { tunnelId, type, content })
+function onMessage(tunnelId, type, content) {
+    console.log(`[onMessage] =>`, {
+        tunnelId,
+        type,
+        content
+    })
 
     switch (type) {
         case 'speak':
@@ -97,8 +105,10 @@ function onMessage (tunnelId, type, content) {
  * 客户端关闭 WebSocket 信道或者被信道服务器判断为已断开后，
  * 会调用该方法，此时可以进行清理及通知操作
  */
-function onClose (tunnelId) {
-    console.log(`[onClose] =>`, { tunnelId })
+function onClose(tunnelId) {
+    console.log(`[onClose] =>`, {
+        tunnelId
+    })
 
     if (!(tunnelId in userMap)) {
         console.log(`[onClose][Invalid TunnelId]=>`, tunnelId)
