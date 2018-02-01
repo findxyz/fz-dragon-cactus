@@ -902,7 +902,6 @@ icon {
 }
 
 .weui-panel:before {
-  content: '120';
   position: absolute;
   left: 0;
   top: 0;
@@ -913,7 +912,6 @@ icon {
 }
 
 .weui-panel:after {
-  content: '120';
   position: absolute;
   left: 0;
   bottom: 0;
@@ -931,7 +929,6 @@ icon {
 }
 
 .weui-panel__hd:after {
-  content: '0 0 100 100';
   position: absolute;
   left: 0;
   bottom: 0;

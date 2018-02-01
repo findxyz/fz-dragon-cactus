@@ -23,7 +23,7 @@
         <view class="weui-cells weui-cells_after-title">
             <view class="weui-cell weui-cell_input">
                 <view class="weui-cell__bd">
-                    <input class="weui-input" placeholder="" value="{{answer}}" style="font-size: 32rpx" bindinput="changeAnswer" />
+                    <textarea class="weui-textarea" placeholder="" value="{{answer}}" style="height: 4.3em; font-size: 32rpx;" bindinput="changeAnswer" />
                 </view>
             </view>
         </view>

@@ -9,12 +9,11 @@ var config = {
 
     service: {
         host,
-
         loginUrl: `${host}/weapp/login`,
-
         requestUrl: `${host}/weapp/user`,
-
-        riddleUrl: `${host}/weapp/riddle`
+        riddleUrl: `${host}/weapp/riddle`,
+        questionUrl: `${host}/weapp/question`,
+        answerUrl: `${host}/weapp/answer`
     }
 };
 

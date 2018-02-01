@@ -55,10 +55,14 @@ var helpRequest = function(pager, realRequest, noLogin) {
     realRequest(pager);
 };
 
-var reAuthHandler = function(pager, result) {
+var reAuthHandler = function(pager, result, request) {
     if (result.detail.rawData) {
         util.showBusy("正在登录");
-        helpLogin(pager, function() {});
+        if (request) {
+            helpLogin(pager, request);
+        } else {
+            helpLogin(pager, function() {});
+        }
     }
 }
 

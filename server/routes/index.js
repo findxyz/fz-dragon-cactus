@@ -41,4 +41,8 @@ router.post('/riddle', validationMiddleware, controllers.riddle.post)
 
 router.get('/riddle', controllers.riddle.get)
 
+router.get('/question', controllers.question.get)
+
+router.post('/answer', validationMiddleware, controllers.answer.post)
+
 module.exports = router

@@ -51,14 +51,7 @@
                     </view>
                 </view>
                 <view class="weui-form-preview__ft" hidden="{{row.answerManOpenId != null}}">
-                    <view class="weui-cell weui-cell_input">
-                        <view class="weui-cell__bd">
-                            <input class="weui-input" placeholder="填写答案" placeholder-style="color: red;" value="" style="font-size: 32rpx; color: red; width: 500rpx;" />
-                        </view>
-                    </view>
-                </view>
-                <view class="weui-form-preview__ft" hidden="{{row.answerManOpenId != null}}">
-                    <view class="weui-form-preview__btn weui-form-preview__btn_primary" style="font-size: 33rpx;" hover-class="weui-form-preview__btn_active">抢答</view>
+                        <navigator url="../answer/answer?riddleId={{row.id}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">抢答</navigator>
                 </view>
             </view>
         </view>

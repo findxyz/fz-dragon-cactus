@@ -7,11 +7,11 @@ var util = require('../../utils/util.js');
 var helper = require('../common/common.js');
 
 var postRiddle = function(me) {
+    util.showBusy('正在请求');
     if (!(me.data.question && me.data.answer)) {
         util.showModel('提示', "谜题尚不完全呢");
         return false;
     }
-    util.showBusy('正在请求');
     qcloud.request({
         url: config.service.riddleUrl,
         login: true,

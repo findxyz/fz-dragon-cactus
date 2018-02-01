@@ -1,0 +1,48 @@
+<view class="page root">
+    <view class="page__bd">
+        <view class="weui-btn-area">
+            <button class="weui-btn" type="primary" open-type="getUserInfo" bindgetuserinfo="reAuthHandler" class="{{authShow}}">重新授权</button>
+        </view>
+    
+        <view class="weui-cells__title">
+            <text style="font-size: 32rpx;">{{rows[0].roomNickName ? rows[0].roomNickName + '的房间' : '广场'}}</text>
+        </view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                    <image src="{{rows[0].headImg}}" style="width: 50px; height: 50px; display: block"/>
+                </view>
+                <view class="weui-cell__bd">
+                    <view>出题人</view>
+                    <view style="font-size: 13px;color: #888888;">
+                        <text>{{rows[0].nickName}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <view class="weui-panel">
+            <view class="weui-panel__hd">谜题内容</view>
+            <view class="weui-panel__bd">
+                <view class="weui-media-box weui-media-box_text">
+                    <view class="weui-media-box__desc_fz">
+                        {{rows[0].question}}
+                    </view>
+                </view>
+            </view>
+        </view>
+
+        <view class="weui-cells__title">答案</view>
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell">
+                <view class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="填写答案" value="{{answer}}" bindinput="changeAnswer" placeholder-style="color: green;" style="height: 4.3em; color: green" />
+                </view>
+            </view>
+        </view>
+
+        <view class="weui-btn-area">
+            <button class="weui-btn" type="primary" bindtap="doAnswerRiddle">提交答案</button>
+        </view>
+    </view>
+</view>
