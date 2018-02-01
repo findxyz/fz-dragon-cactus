@@ -74,14 +74,14 @@ var getLoggedInfo = function() {
     };
 
     try {
-        if (wx.setStorageSync('logged')) {
-            loggedInfo.logged = wx.setStorageSync('logged');
+        if (wx.getStorageSync('logged')) {
+            loggedInfo.logged = wx.getStorageSync('logged');
         }
-        if (wx.setStorageSync('authShow')) {
-            loggedInfo.authShow = wx.setStorageSync('authShow');
+        if (wx.getStorageSync('authShow')) {
+            loggedInfo.authShow = wx.getStorageSync('authShow');
         }
-        if (wx.setStorageSync('userInfo')) {
-            loggedInfo.userInfo = wx.setStorageSync('userInfo');
+        if (wx.getStorageSync('userInfo')) {
+            loggedInfo.userInfo = wx.getStorageSync('userInfo');
         }
     } catch (e) {
         console.log(e);

@@ -21,7 +21,7 @@
         </view>
         <view class="weui-cells__title">谜题答案</view>
         <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell weui-cell_input">
+            <view class="weui-cell">
                 <view class="weui-cell__bd">
                     <textarea class="weui-textarea" placeholder="" value="{{answer}}" style="height: 4.3em; font-size: 32rpx;" bindinput="changeAnswer" />
                 </view>

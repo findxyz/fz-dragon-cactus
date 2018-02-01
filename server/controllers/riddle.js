@@ -44,7 +44,7 @@ async function get(ctx) {
         sr.user_info AS roomUserInfo
         FROM t_riddle r
         INNER JOIN cSessionInfo s ON r.question_man_open_id = s.open_id
-        LEFT JOIN cSessionInfo sa ON r.answer_man_open_id = s.open_id 
+        LEFT JOIN cSessionInfo sa ON r.answer_man_open_id = sa.open_id 
         LEFT JOIN t_riddle_room rr ON r.room_id = rr.id
         LEFT JOIN cSessionInfo sr ON rr.owner_open_id = sr.open_id
         `;

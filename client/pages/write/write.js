@@ -7,7 +7,7 @@ var util = require('../../utils/util.js');
 var helper = require('../common/common.js');
 
 var postRiddle = function(me) {
-    util.showBusy('正在请求');
+    
     if (!(me.data.question && me.data.answer)) {
         util.showModel('提示', "谜题尚不完全呢");
         return false;
@@ -22,18 +22,18 @@ var postRiddle = function(me) {
             'roomId': me.data.roomId
         },
         success(result) {
-            util.showSuccess('谜题发布成功');
             me.setData({
                 question: "",
                 answer: ""
             });
+            util.showSuccess('谜题发布成功');
             console.log('request success', result);
         },
         fail(error) {
-            util.showModel('请求失败', error);
             me.setData({
                 show: "show"
             });
+            util.showModel('请求失败', error);
             console.log('request fail', error);
         },
         complete() {
@@ -75,6 +75,7 @@ Page({
     },
 
     doPostRiddle() {
+        util.showBusy('正在请求');
         helper.helpRequest(this, postRiddle);
     },
 

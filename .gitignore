@@ -45,3 +45,4 @@ sh/
 sdk.config.json
 # ignore local config
 server/config.local.js
+server/package-lock.json

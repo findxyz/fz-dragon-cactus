@@ -9,7 +9,6 @@ var helper = require('../common/common.js');
 
 var getQuestion = function(that) {
 
-  util.showBusy('正在加载');
   qcloud.request({
     url: config.service.questionUrl,
     login: true,
@@ -17,7 +16,6 @@ var getQuestion = function(that) {
       riddleId: that.data.riddleId
     },
     success: function(res) {
-      wx.hideToast();
       var riddleRows = res.data.data;
       var rows = that.data.rows;
 
@@ -28,6 +26,8 @@ var getQuestion = function(that) {
       that.setData({
         rows: rows
       });
+      
+      wx.hideToast();
     },
     fail: function(error) {
       wx.hideToast();
@@ -42,7 +42,7 @@ var answerRiddle = function(that) {
     util.showModel('提示', "您还没有填写答案");
     return false;
   }
-  util.showBusy('正在加载');
+  
   qcloud.request({
     url: config.service.answerUrl,
     method: "POST",
@@ -52,7 +52,6 @@ var answerRiddle = function(that) {
       answer: that.data.answer
     },
     success: function(res) {
-      wx.hideToast();
       var result = res.data.data;
       if (result.success) {
         wx.showModal({
@@ -68,6 +67,10 @@ var answerRiddle = function(that) {
       } else {
         util.showModel('提示', result.message);
       }
+      if (result.refresh) {
+        wx.setStorageSync('riddleRefresh', true);
+      }
+      wx.hideToast();
     },
     fail: function(error) {
       wx.hideToast();
@@ -95,6 +98,7 @@ Page({
   },
 
   doAnswerRiddle: function() {
+    util.showBusy('正在加载');
     helper.helpRequest(this, answerRiddle);
   },
 
@@ -117,6 +121,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
+    util.showBusy('正在加载');
     helper.helpRequest(this, getQuestion);
   },
 

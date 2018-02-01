@@ -16,7 +16,8 @@ async function post(ctx) {
             let riddleSql = `
                 SELECT
                 r.answer,
-                r.question_man_open_id AS questionManOpenId
+                r.question_man_open_id AS questionManOpenId,
+                r.answer_man_open_id AS answerManOpenId
                 FROM t_riddle r
             `;
             riddleSql += "WHERE 1=1 AND r.id = " + mysqlTool.escape(riddle.id) + " ";
@@ -29,6 +30,10 @@ async function post(ctx) {
                     if (r.questionManOpenId === userInfo.openId) {
                         result.success = false;
                         result.message = "禁止裁判员答题";
+                    } else if (r.answerManOpenId) {
+                        result.success = false;
+                        result.refresh = true;
+                        result.message = "抱歉，该谜题已被破解...";
                     } else if (r.answer !== riddle.answer) {
                         result.success = false;
                         result.message = "不是这个答案，再想想...";
@@ -38,6 +43,7 @@ async function post(ctx) {
                         riddleUpSql += "WHERE 1=1 AND id = " + mysqlTool.escape(riddle.id);
                         let upRes = await mysql.raw(riddleUpSql);
                         result.success = true;
+                        result.refresh = true;
                     }
                     resOk = true;
                     ctx.state.data = result;

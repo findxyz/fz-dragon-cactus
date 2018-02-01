@@ -30,8 +30,6 @@ var riddleLoad = function(that) {
         },
         success: function(res) {
 
-            wx.stopPullDownRefresh();
-
             var riddleRows = res.data.data;
             var rows = that.data.rows;
 
@@ -55,6 +53,8 @@ var riddleLoad = function(that) {
                     loadStatus: "hidden"
                 });
             }
+
+            wx.stopPullDownRefresh();
         },
         fail: function(error) {
             wx.stopPullDownRefresh();
@@ -80,14 +80,26 @@ Page({
         });
     },
 
-    onShow: function() {
+    onLoad: function(options) {
         page = 1;
         over = false;
         this.setData({
             rows: []
         });
-        this.setData(helper.getLoggedInfo());
         helper.helpRequest(this, riddleLoad, true);
+    },
+
+    onShow: function() {
+        this.setData(helper.getLoggedInfo());
+        if (wx.getStorageSync('riddleRefresh')) {
+            wx.setStorageSync('riddleRefresh', false);
+            page = 1;
+            over = false;
+            this.setData({
+                rows: []
+            });
+            helper.helpRequest(this, riddleLoad, true);
+        }
     },
 
     onPullDownRefresh: function() {
