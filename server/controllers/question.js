@@ -47,6 +47,28 @@ async function get(ctx) {
     ctx.state.data = rows
 }
 
+async function del(ctx) {
+    let riddle = ctx.request.body;
+    let userInfo = ctx.state.$wxInfo.userinfo;
+    if (userInfo) {
+        let questionSql = "SELECT * FROM t_riddle WHERE 1=1 ";
+        questionSql += "AND id = " + mysqlTool.escape(riddle.id) + " ";
+        questionSql += "AND question_man_open_id = " + mysqlTool.escape(userInfo.openId) + " ";
+        questionSql += "AND answer_man_open_id IS NULL ";
+        let riddleData = await mysql.raw(questionSql);
+        if (riddleData[0].length > 0) {
+            let delSql = "DELETE FROM t_riddle WHERE id = " + mysqlTool.escape(riddle.id) + " ";
+            let delRes = await mysql.raw(delSql);
+            ctx.state.data = true;
+        } else {
+            ctx.state.code = -1;
+        }
+    } else {
+        ctx.state.code = -1;
+    }
+}
+
 module.exports = {
-    get
+    get,
+    del
 }

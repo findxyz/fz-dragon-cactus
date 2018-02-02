@@ -21,20 +21,7 @@ var helpLogin = function(pager, realRequest) {
                 setLoggedInfo(pager, true, result, "authHidden");
                 realRequest(pager);
             } else {
-                qcloud.request({
-                    url: config.service.requestUrl,
-                    login: true,
-                    success(result) {
-                        wx.hideToast();
-                        setLoggedInfo(pager, true, result.data.data, "authHidden");
-                        realRequest(pager);
-                    },
-                    fail(error) {
-                        wx.hideToast();
-                        setLoggedInfo(pager, false, null, "authShow");
-                        console.log('request fail', error);
-                    }
-                });
+                helpGetUserInfo(pager, realRequest);
             }
         },
         fail(error) {
@@ -44,6 +31,25 @@ var helpLogin = function(pager, realRequest) {
         }
     });
 };
+
+var helpGetUserInfo = function(pager, request) {
+    qcloud.request({
+        url: config.service.requestUrl,
+        login: true,
+        success(result) {
+            wx.hideToast();
+            setLoggedInfo(pager, true, result.data.data, "authHidden");
+            if (request) {
+                request(pager);
+            }
+        },
+        fail(error) {
+            wx.hideToast();
+            setLoggedInfo(pager, false, null, "authShow");
+            console.log('request fail', error);
+        }
+    });
+}
 
 var helpRequest = function(pager, realRequest, noLogin) {
     if (!noLogin) {
@@ -108,5 +114,6 @@ var setLoggedInfo = function(pager, isLogin, userInfo, authShow) {
 module.exports = {
     helpRequest: helpRequest,
     reAuthHandler: reAuthHandler,
-    getLoggedInfo: getLoggedInfo
+    getLoggedInfo: getLoggedInfo,
+    helpGetUserInfo: helpGetUserInfo
 };

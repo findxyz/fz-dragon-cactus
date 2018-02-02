@@ -10,6 +10,8 @@ var page = 1;
 
 var over = false;
 
+var firstLoad = true;
+
 var riddleLoad = function(that) {
 
     if (over) {
@@ -26,7 +28,7 @@ var riddleLoad = function(that) {
         data: {
             pageSize: 10,
             pageNo: page,
-            roomId: that.data.roomId
+            roomId: that.data.roomId || ''
         },
         success: function(res) {
 
@@ -74,27 +76,39 @@ Page({
         rows: []
     },
 
+    clearRoomId: function() {
+        this.setData({
+            roomId: ""
+        });
+        wx.setStorageSync("roomId", "");
+    },
+
     changeRoomId: function(e) {
         this.setData({
             roomId: e.detail.value
         });
+        wx.setStorageSync("roomId", e.detail.value);
     },
 
     onLoad: function(options) {
-        page = 1;
-        over = false;
-        this.setData({
-            rows: []
-        });
-        helper.helpRequest(this, riddleLoad, true);
     },
 
     onShow: function() {
         this.setData(helper.getLoggedInfo());
-        if (wx.getStorageSync('riddleRefresh')) {
+        if (wx.getStorageSync("roomId")) {
+            this.setData({
+                roomId: wx.getStorageSync("roomId")
+            });
+        } else {
+            this.setData({
+                roomId: ""
+            });
+        }
+        if (wx.getStorageSync('riddleRefresh') || firstLoad) {
             wx.setStorageSync('riddleRefresh', false);
             page = 1;
             over = false;
+            firstLoad = false;
             this.setData({
                 rows: []
             });

@@ -26,7 +26,7 @@ var getQuestion = function(that) {
       that.setData({
         rows: rows
       });
-      
+
       wx.hideToast();
     },
     fail: function(error) {
@@ -42,7 +42,7 @@ var answerRiddle = function(that) {
     util.showModel('提示', "您还没有填写答案");
     return false;
   }
-  
+
   qcloud.request({
     url: config.service.answerUrl,
     method: "POST",
@@ -129,7 +129,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    this.setData(helper.getLoggedInfo());
   },
 
   /**

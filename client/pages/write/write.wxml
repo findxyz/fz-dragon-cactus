@@ -9,6 +9,9 @@
                 <view class="weui-cell__bd">
                     <input class="weui-input" placeholder="广场" value="{{roomId}}" style="font-size: 32rpx" bindinput="changeRoomId" />
                 </view>
+                <view class="weui-cell__ft">
+                    <view class="weui-vcode-btn" bindtap="clearRoomId">清空</view>
+                </view>
             </view>
         </view>
         <view class="weui-cells__title">谜题内容</view>

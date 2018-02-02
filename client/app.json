@@ -2,7 +2,8 @@
     "pages": [
         "pages/index/index",
         "pages/write/write",
-        "pages/answer/answer"
+        "pages/answer/answer",
+        "pages/mine/mine"
     ],
     "tabBar": {
         "color": "#7A7E83",
@@ -21,6 +22,12 @@
                 "iconPath": "image/x1.png",
                 "selectedIconPath": "image/x2.png",
                 "text": "@@@"
+            },
+            {
+                "pagePath": "pages/mine/mine",
+                "iconPath": "image/w1.png",
+                "selectedIconPath": "image/w2.png",
+                "text": "~~~"
             }
         ]
     },

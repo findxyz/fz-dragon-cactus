@@ -13,7 +13,8 @@ var config = {
         requestUrl: `${host}/weapp/user`,
         riddleUrl: `${host}/weapp/riddle`,
         questionUrl: `${host}/weapp/question`,
-        answerUrl: `${host}/weapp/answer`
+        answerUrl: `${host}/weapp/answer`,
+        copyUrl: `${host}/weapp/copy`
     }
 };
 

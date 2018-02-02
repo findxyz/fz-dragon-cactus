@@ -3,25 +3,33 @@
         <view class="weui-btn-area">
             <button class="weui-btn" type="primary" open-type="getUserInfo" bindgetuserinfo="reAuthHandler" class="{{authShow}}">重新授权</button>
         </view>
-        <view class="weui-cells__title">位置(下拉进入)</view>
+        <view class="weui-cells__title">个人中心</view>
         <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell weui-cell_input">
-                <view class="weui-cell__bd">
-                    <input class="weui-input" placeholder="广场" value="{{roomId}}" style="font-size: 32rpx" bindinput="changeRoomId" />
+            <view class="weui-cell">
+                <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                    <image src="{{userInfo.avatarUrl}}" style="width: 50px; height: 50px; display: block" />
                 </view>
-                <view class="weui-cell__ft">
-                    <view class="weui-vcode-btn" bindtap="clearRoomId">清空</view>
+                <view class="weui-cell__bd">
+                    <view>昵称</view>
+                    <view style="font-size: 13px;color: #888888;">{{userInfo.nickName}}</view>
                 </view>
             </view>
+            <view class="weui-cell weui-cell_access">
+                <view class="weui-cell__bd">
+                    <view style="display: inline-block; vertical-align: middle">我的房间号</view>
+                </view>
+                <view class="weui-cell__ft weui-cell__ft_in-access" wx:if="{{canIUseClipboard}}" bindtap="copyNo">复制房间号</view>
+            </view>
         </view>
+        <view class="weui-cells__title">我参与的谜题</view>
         <view scroll-y="true" bindscrolltolower="load" bindscrolltoupper="refresh">
             <view class="weui-form-preview" wx:for="{{rows}}" wx:key="id" wx:for-item="row" style="margin: 20rpx 0;">
                 <view class="weui-form-preview__hd">
                     <view class="weui-form-preview__item">
                         <view class="weui-form-preview__label">出题人</view>
-                        <view class="weui-form-preview__value_in-hd">
-                            <text style="font-size: 32rpx;">{{row.roomNickName ? row.roomNickName + '的房间' : '广场'}}</text>
-                            <view class="userinfo">
+                        <view class="weui-form-preview__value_in-hd" bindtap="gotoRoom" data-room-id="{{row.roomId}}">
+                            <text style="font-size: 32rpx; color: blue;">{{row.roomNickName ? row.roomNickName + '的房间' : '广场'}}</text>
+                            <view class="userinfo" hidden="{{userInfo.openId == row.questionManOpenId}}">
                                 <image class="userinfo-avatar" src="{{row.headImg}}" background-size="cover"></image>
                                 <view>
                                     <text class="userinfo-nickname">{{row.nickName}}</text>
@@ -35,11 +43,11 @@
                         <view class="weui-form-preview__label">谜题</view>
                         <view class="weui-form-preview__value">{{row.question}}</view>
                     </view>
-                    <view class="weui-form-preview__item" hidden="{{row.answerManOpenId == null}}">
+                    <view class="weui-form-preview__item">
                         <view class="weui-form-preview__label">答案</view>
                         <view class="weui-form-preview__value">{{row.answer}}</view>
                     </view>
-                    <view class="weui-form-preview__item" hidden="{{row.answerManOpenId == null}}">
+                    <view class="weui-form-preview__item" hidden="{{row.answerManOpenId == null || row.answerManOpenId == userInfo.openId}}">
                         <view class="weui-form-preview__label">猜中者</view>
                         <view class="weui-form-preview__value_in-hd">
                             <view class="userinfo">
@@ -51,8 +59,8 @@
                         </view>
                     </view>
                 </view>
-                <view class="weui-form-preview__ft" hidden="{{row.answerManOpenId != null}}">
-                    <navigator url="../answer/answer?riddleId={{row.id}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">抢答</navigator>
+                <view class="weui-btn-area" hidden="{{row.answerManOpenId != null}}">
+                    <button class="weui-btn" type="warn" data-id="{{row.id}}" bindtap="delRiddle">删除谜题</button>
                 </view>
             </view>
         </view>

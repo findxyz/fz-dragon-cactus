@@ -45,4 +45,8 @@ router.get('/question', controllers.question.get)
 
 router.post('/answer', validationMiddleware, controllers.answer.post)
 
+router.get('/copy', validationMiddleware, controllers.copy.get)
+
+router.post('/question', validationMiddleware, controllers.question.del)
+
 module.exports = router
