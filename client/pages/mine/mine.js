@@ -102,6 +102,7 @@ Page({
   delRiddle: function(e) {
     let that = this;
     let id = e.currentTarget.dataset.id;
+    let idx = e.currentTarget.dataset.index;
     util.showBusy('正在请求');
     helper.helpRequest(this, function(that) {
       qcloud.request({
@@ -114,7 +115,11 @@ Page({
         success: function(res) {
           if (res.data.data) {
             util.showSuccess('删除成功');
-            that.onShow();
+            let rows = that.data.rows;
+            rows.splice(idx, 1);
+            that.setData({
+              rows: rows
+            });
           }
         },
         fail: function(error) {

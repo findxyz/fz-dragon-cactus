@@ -23,7 +23,7 @@
         </view>
         <view class="weui-cells__title">我参与的谜题</view>
         <view scroll-y="true" bindscrolltolower="load" bindscrolltoupper="refresh">
-            <view class="weui-form-preview" wx:for="{{rows}}" wx:key="id" wx:for-item="row" style="margin: 20rpx 0;">
+            <view class="weui-form-preview" wx:for="{{rows}}" wx:for-index="idx" wx:key="id" wx:for-item="row" style="margin: 20rpx 0;">
                 <view class="weui-form-preview__hd">
                     <view class="weui-form-preview__item">
                         <view class="weui-form-preview__label">出题人</view>
@@ -60,7 +60,7 @@
                     </view>
                 </view>
                 <view class="weui-btn-area" hidden="{{row.answerManOpenId != null}}">
-                    <button class="weui-btn" type="warn" data-id="{{row.id}}" bindtap="delRiddle">删除谜题</button>
+                    <button class="weui-btn" type="warn" data-id="{{row.id}}" data-index="{{idx}}" bindtap="delRiddle">删除谜题</button>
                 </view>
             </view>
         </view>
